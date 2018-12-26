@@ -1,0 +1,13 @@
+     1                                  segment .text
+     2                                      global  _start
+     3                                  _start:
+     4 00000000 48B8F0DEBC9A785634-             mov rax,0x123456789abcdef0
+     4 00000009 12                 
+     5 0000000A B864000000                      mov eax,100
+     6 0000000F B80A000000                      mov rax, 10
+     7 00000014 B800000000                      mov rax, 0 
+     8                                          
+     9                                  _exit:
+    10 00000019 B801000000              	mov rax,1
+    11 0000001E BB00000000              	mov rbx,0
+    12 00000023 CD80                    	int 0x80

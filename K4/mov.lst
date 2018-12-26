@@ -1490,31 +1490,13 @@
    626                              <1> %rotate 1
    627                              <1> %endrep
    628                              <1> %endmacro
-     1                                  segment .data
-     2 00000000 04000000                    a   dd 4
-     3 00000004 CDCC8C40                    b   dd 4.4
-     4 00000008 00000000<rept>              c   times 10 dd 0
-     5 00000030 01000200                    d   dw 1, 2
-     6 00000034 FB                          e   db 0xfb
-     7 00000035 68656C6C6F2C20776F-         f   db "hello, world", 0
-     7 0000003E 726C6400           
-     8                                  
-     9                                  segment .bss
-    10 00000000 <res 00000004>              g   resd 1
-    11 00000004 <res 00000028>              h   resd 10
-    12 0000002C <res 00000064>              i   resb 100
-    13                                  
-    14                                  segment .text
-    15                                      global main         ;tell linker about main
-    16                                      global _start
-    17                                  main:
-    18                                  _start:
-    19 00000000 4883EC18                    sub rsp, 24         ;leave some room for local variables
-    20                                                          ;and align stack to 16 byte
-    21 00000004 50                          push rax 
-    22 00000005 53                          push rbx
-    23 00000006 31C0                        xor eax,eax         ; set rax to 0 for return value
-    24 00000008 5B                          pop rbx
-    25 00000009 58                          pop rax
-    26 0000000A 4883C418                    add rsp, 24         ;undo the stack manipulation
-    27 0000000E C3                          ret
+     1                                  segment .text
+     2                                      global  main
+     3                                  main:
+     4 00000000 48B8F0DEBC9A785634-             mov rax,0x123456789abcdef0
+     4 00000009 12                 
+     5 0000000A B864000000                      mov eax,100
+     6 0000000F B80A000000                      mov rax, 10
+     7 00000014 B800000000                      mov rax, 0 
+     8 00000019 C3                              ret
+     9                                          

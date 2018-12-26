@@ -1,0 +1,22 @@
+     1                                  	section .data
+     2 00000000 0200000000000000        a	dq	2
+     3 00000008 0400000000000000        b	dq	4
+     4 00000010 FEFFFFFFFFFFFFFF        c	dq	-2
+     5 00000018 FCFFFFFFFFFFFFFF        d	dq	-4
+     6                                  
+     7                                  	section .text
+     8                                  	global	_start
+     9                                  _start:
+    10 00000000 488B0425[00000000]      	mov	rax, [a]	;load a (2) into rax
+    11 00000008 488B1C25[08000000]      	mov	rbx, [b]	;load b (4) into rbx
+    12 00000010 488B0C25[10000000]      	mov	rcx, [c]	;load c (-2) into rcx
+    13 00000018 488B1425[18000000]      	mov	rdx, [d]	;load d (-4) into rdx
+    14                                  _add:				;add all registers. sum should be left in rax
+    15 00000020 4801D8                  	add	rax, rbx	; rax <- rax + rbx
+    16 00000023 4801C8                  	add	rax, rcx	; rax <- rax + rcx
+    17 00000026 4801D0                  	add	rax, rdx	; rax <- rax + rdx
+    18                                  
+    19                                  _exit:
+    20 00000029 B801000000              	mov	rax, 1
+    21 0000002E 4831DB                  	xor 	rbx,rbx
+    22 00000031 CD80                    	int	0x80
