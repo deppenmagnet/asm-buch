@@ -1,0 +1,23 @@
+     1                                  	segment .text
+     2                                  	global	_start
+     3                                  _start:
+     4 00000000 55                      	push	rbp
+     5 00000001 4889E5                  	mov	rbp, rsp
+     6 00000004 B878563412              	mov	rax, 0x12345678
+     7 00000009 48C1E808                	shr	rax, 8			; I want bits 8-15
+     8 0000000D 4825FF000000            	and	rax, 0xff		; rax now holds 0x56
+     9 00000013 B878563412              	mov	rax, 0x12345678		; I want to replace bits 8-15
+    10 00000018 BAAA000000              	mov	rdx, 0xaa		; rdx holds replacemant field
+    11 0000001D BBFF000000              	mov 	rbx, 0xff		; I need an 8 bit mask
+    12 00000022 48C1E308                	shl	rbx, 8			; shift mask to align @ bit 8
+    13 00000026 48F7D3                  	not	rbx			; invert the mask
+    14 00000029 4821D8                  	and	rax, rbx		; now bits 8-15 are all 0
+    15 0000002C 48C1E208                	shl	rdx, 8			; Shift the new bits to align
+    16 00000030 4809D0                  	or	rax, rdx		; rax now has 0x1234aa78
+    17 00000033 4831C0                  	xor 	rax, rax		;
+    18                                  
+    19                                  _quit:
+    20 00000036 B801000000              	mov	rax, 1
+    21 0000003B 4831DB                  	xor	rbx, rbx
+    22 0000003E CD80                    	int	0x80
+    23                                  	

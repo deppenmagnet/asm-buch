@@ -1,0 +1,26 @@
+     1                                  	segment .data
+     2 00000000 9700000000000000        a	dq	151
+     3 00000008 3601000000000000        b	dq	310
+     4                                  
+     5                                  	segment	.bss
+     6 00000000 <res 00000008>          sum	resq	1
+     7                                  
+     8                                  	segment .text
+     9                                  	global _start
+    10                                  _start:
+    11 00000000 55                      	push	rbp		;establish a stackframe
+    12 00000001 4889E5                  	mov	rbp, rsp
+    13 00000004 4883EC10                	sub	rsp, 16		;make space for 16 byte on the stack for local variables
+    14 00000008 B809000000              	mov	rax, 9		;set rax to 9
+    15 0000000D 48010425[00000000]      	add	[a], rax	;add rax to a
+    16 00000015 488B0425[08000000]      	mov	rax, [b]	;set rax to b
+    17 0000001D 4883C00A                	add	rax, 10		;add 10 to rax
+    18 00000021 48030425[00000000]      	add	rax, [a]	;add a 
+    19 00000029 48890425[00000000]      	mov	[sum], rax	;save rax to sum
+    20 00000031 4831C0                  	xor	rax, rax	;set rax to 0
+    21 00000034 C9                      	leave			;restore previous stackframe
+    22                                  
+    23                                  _exit:
+    24 00000035 B801000000              	mov	rax, 1
+    25 0000003A 4831DB                  	xor	rbx, rbx
+    26 0000003D CD80                    	int	0x80
